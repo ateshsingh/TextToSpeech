@@ -1,0 +1,214 @@
+package com.example.text.to.speech;
+
+import java.util.Locale;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class TextToSpeechDemoActivity extends Activity implements OnInitListener,OnClickListener{
+	TextToSpeech tts;
+	String text="";
+	EditText edittext;
+	Button buttonUK;
+	Button buttonUS;
+	Button buttonGerman;
+	Button buttonCannada;
+	Button buttonChinese;
+	Button buttonFrench;
+	Button buttonItalian;
+	Button buttonJapan;
+	Button buttonKorea;
+	Button buttonTaiwan;
+	int resultcounter;
+	int result;
+	
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+        buttonUK=(Button)findViewById(R.id.buttonUK);
+        buttonUS=(Button)findViewById(R.id.buttonUS);
+        buttonGerman=(Button)findViewById(R.id.buttonGerman);
+        buttonCannada=(Button)findViewById(R.id.buttonCannada);
+        buttonChinese=(Button)findViewById(R.id.buttonChina);
+        buttonFrench=(Button)findViewById(R.id.buttonFrench);
+        buttonItalian=(Button)findViewById(R.id.buttonItalian);
+        buttonJapan=(Button)findViewById(R.id.buttonJapan);
+        buttonKorea=(Button)findViewById(R.id.buttonKorea);
+        buttonTaiwan=(Button)findViewById(R.id.buttonTaiwan);
+        
+        buttonUK.setOnClickListener(this);
+        buttonUS.setOnClickListener(this);
+        buttonGerman.setOnClickListener(this);
+        buttonCannada.setOnClickListener(this);
+        buttonChinese.setOnClickListener(this);
+        buttonFrench.setOnClickListener(this);
+        buttonItalian.setOnClickListener(this);
+        buttonJapan.setOnClickListener(this);
+        buttonKorea.setOnClickListener(this);
+        buttonTaiwan.setOnClickListener(this);
+        
+    }
+
+	public void onInit(int status) {
+		// TODO Auto-generated method stub
+		if(status == TextToSpeech.SUCCESS){
+			//set the preference to US English
+			//note that language may not be avalable , and the result will indicate this.
+			
+			switch(resultcounter){
+			case 1:
+				result=tts.setLanguage(Locale.UK);
+			break;
+			case 2:
+				result=tts.setLanguage(Locale.US);
+				break;
+			case 3:
+				result=tts.setLanguage(Locale.GERMAN);
+				break;
+			
+			case 4:
+				result=tts.setLanguage(Locale.CANADA);
+				break;
+			//	
+			case 5:
+				result=tts.setLanguage(Locale.CHINESE);
+				break;
+				
+			case 6:
+				result=tts.setLanguage(Locale.FRENCH);
+				break;
+				
+			case 7:
+				result=tts.setLanguage(Locale.ITALIAN);
+				break;
+				//
+			case 8:
+				result=tts.setLanguage(Locale.JAPANESE);
+				break;
+				
+			case 9:
+				result=tts.setLanguage(Locale.KOREA);
+				break;
+				
+			case 10:
+				result=tts.setLanguage(Locale.TAIWAN);
+				break;
+				
+			}
+			//tts.setPitch(1.0f);
+			//tts.setSpeechRate(1);
+			
+			if(result == TextToSpeech.LANG_MISSING_DATA || result== TextToSpeech.LANG_NOT_SUPPORTED){
+				Toast.makeText(this, "Language not supported", Toast.LENGTH_SHORT).show();
+			}
+			else{
+				// Check the documentation for other possible result codes.
+				// For example, the language may be available for the locale,
+				// but not for the specified country and variant.
+
+				// The TTS engine has been successfully initialized.
+				// Allow the user to press the button for the app to speak again.
+				// Greet the user.
+				tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+			}
+			
+		}else
+		{
+			Toast.makeText(this, "Could not initialize text to speech", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		
+		if(tts!=null){
+			tts.stop();
+			tts.shutdown();
+		}
+		super.onDestroy();
+	}
+
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId()){
+		case R.id.buttonUK:
+			resultcounter=1;
+			edittext=(EditText)findViewById(R.id.editText1);
+	        text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+	    break;
+		case R.id.buttonUS:
+			resultcounter=2;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+		case R.id.buttonGerman:
+			resultcounter=3;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+		case R.id.buttonCannada:
+			resultcounter=4;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+		case R.id.buttonChina:
+			resultcounter=5;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+		case R.id.buttonFrench:
+			resultcounter=6;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+		case R.id.buttonItalian:
+			resultcounter=7;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+		
+		case R.id.buttonJapan:
+			resultcounter=8;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+			
+		case R.id.buttonKorea:
+			resultcounter=9;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+			
+		case R.id.buttonTaiwan:
+			resultcounter=10;
+			edittext=(EditText)findViewById(R.id.editText1);
+			text=edittext.getText().toString();
+			tts=new TextToSpeech(this, this);
+			break;
+			
+		}
+		
+	}
+	
+	
+}
